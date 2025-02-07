@@ -52,16 +52,18 @@ Before running the application, ensure you have the following installed:
    pytesseract.pytesseract.tesseract_cmd = '/opt/homebrew/bin/tesseract'  # Modify this path
    ```
 
-2. Configure your user credentials in the `users` list at the bottom of `login.py`:
-   ```python
-   users = [
-       {
-           "username": "your_username",
-           "password": "your_password",
-           "file": "path_to_your_file.xlsx"
-       }
-   ]
+2. Create a `.env` file in the project root directory:
+   ```bash
+   touch .env
    ```
+
+3. Add your credentials to the `.env` file:
+   ```plaintext
+   SCM_USERNAME=your_username
+   SCM_PASSWORD=your_password
+   ```
+   
+   ⚠️ **Important**: Never commit the `.env` file to version control. Make sure it's listed in your `.gitignore`.
 
 ## Usage
 
