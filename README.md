@@ -2,6 +2,10 @@
 
 This automation tool helps in logging into the SCM Portal, solving CAPTCHAs, and uploading files automatically using Selenium WebDriver.
 
+## Demo
+
+![SCM Portal Automation Demo](demo.gif)
+
 ## Prerequisites
 
 Before running the application, ensure you have the following installed:
