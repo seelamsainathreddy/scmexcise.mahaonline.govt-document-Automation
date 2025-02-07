@@ -1,0 +1,4 @@
+selenium>=4.0.0
+opencv-python>=4.8.0
+pytesseract>=0.3.10
+webdriver-manager>=4.0.0 

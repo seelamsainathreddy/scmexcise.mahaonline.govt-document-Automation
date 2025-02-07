@@ -10,6 +10,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import logging
 from selenium.common.exceptions import TimeoutException
+from dotenv import load_dotenv
 
 logging.basicConfig(
     level=logging.INFO,
@@ -33,9 +34,10 @@ class CaptchaSolver:
         return sum(int(number) for number in captcha_text.split('+'))
 
 class BrowserAutomation:
-    def __init__(self, username, password, file_path, url):
-        self.username = username
-        self.password = password
+    def __init__(self, file_path, url):
+        load_dotenv()  # Load environment variables from .env file
+        self.username = os.getenv('SCM_USERNAME')
+        self.password = os.getenv('SCM_PASSWORD')
         self.file_path = file_path
         self.url = url
         self.driver = self._init_driver()
@@ -47,8 +49,8 @@ class BrowserAutomation:
     
     def login(self):
         try:
-            self.driver.find_element(By.ID, "txtUserName").send_keys(self.username)
-            self.driver.find_element(By.ID, "txtPwd").send_keys(self.password)
+            self.driver.find_element(By.ID, "txtUserName").send_keys(self.username) # type: ignore
+            self.driver.find_element(By.ID, "txtPwd").send_keys(self.password) # type: ignore
             captcha_element = self.driver.find_element(By.ID, "Captcha1_imgCtrl")
             captcha_solution = CaptchaSolver.solve(captcha_element)
             self.driver.find_element(By.ID, "txtCaptcha").send_keys(str(captcha_solution))
@@ -220,11 +222,8 @@ class BrowserAutomation:
         
 
 if __name__ == "__main__":
-    users = [
-        {"username": "3090643406", "password": "3090643406", "file": "SCMSample.xlsx"}
-    ]
     url = "https://scmexcise.mahaonline.gov.in/retailer/"
+    file_path = "SCMSample.xlsx"
     
-    for user in users:
-        bot = BrowserAutomation(user["username"], user["password"], user["file"], url)
-        bot.run()
+    bot = BrowserAutomation(file_path=file_path, url=url)
+    bot.run()
